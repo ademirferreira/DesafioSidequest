@@ -11,6 +11,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DesafioSidequest.Business.Interfaces;
+using DesafioSidequest.Business.Notificacoes;
+using DesafioSidequest.Business.Services;
+using DesafioSidequest.Data.Context;
+using DesafioSidequest.Data.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace DesafioSidequest.API
 {
@@ -26,6 +32,12 @@ namespace DesafioSidequest.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<INotificador, Notificador>();
+            services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IClienteRepository, ClienteRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
