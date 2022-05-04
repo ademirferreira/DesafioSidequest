@@ -38,7 +38,7 @@ namespace DesafioSidequest.API.Controllers
             return cliente;
         }
 
-        [HttpGet]
+        [HttpGet("obter-por-id/{id:guid}")]
         public async Task<ActionResult<ClienteViewModel>> ObterPorId(Guid id)
         {
             var cliente = _mapper.Map<ClienteViewModel>(await _clienteRepository.ObterPorId(id));
